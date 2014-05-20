@@ -940,8 +940,12 @@ void Heap::SetTargetHeapUtilization(float target) {
   target_utilization_ = target;
 }
 
-void Heap::SetTargetHeapMinFree(size_t size) {
-  min_free_ = size;
+void Heap::SetTargetHeapMinFree(size_t bytes) {
+  min_free_ = bytes;
+}
+
+void Heap::SetTargetHeapConcurrentStart(size_t bytes) {
+  concurrent_start_bytes_ = bytes;
 }
 
 size_t Heap::GetObjectsAllocated() const {

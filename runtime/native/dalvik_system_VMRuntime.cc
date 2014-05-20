@@ -43,8 +43,16 @@ static void VMRuntime_nativeSetTargetHeapUtilization(JNIEnv*, jobject, jfloat ta
   Runtime::Current()->GetHeap()->SetTargetHeapUtilization(target);
 }
 
-static void VMRuntime_nativeSetTargetHeapMinFree(JNIEnv*, jobject, jfloat target) {
-  Runtime::Current()->GetHeap()->SetTargetHeapMinFree(target);
+static jint VMRuntime_nativeSetTargetHeapMinFree(JNIEnv*, jobject, jint bytes) {
+  Runtime::Current()->GetHeap()->SetTargetHeapMinFree(bytes);
+
+  return Runtime::Current()->GetHeap()->GetTargetHeapMinFree();
+}
+
+static jint VMRuntime_nativeSetTargetHeapConcurrentStart(JNIEnv*, jobject, jint bytes) {
+  Runtime::Current()->GetHeap()->SetTargetHeapConcurrentStart(bytes);
+
+  return Runtime::Current()->GetHeap()->GetTargetHeapConcurrentStart();
 }
 
 static void VMRuntime_startJitCompilation(JNIEnv*, jobject) {
@@ -211,6 +219,7 @@ static JNINativeMethod gMethods[] = {
   NATIVE_METHOD(VMRuntime, isDebuggerActive, "()Z"),
   NATIVE_METHOD(VMRuntime, nativeSetTargetHeapUtilization, "(F)V"),
   NATIVE_METHOD(VMRuntime, nativeSetTargetHeapMinFree, "(I)I"),
+  NATIVE_METHOD(VMRuntime, nativeSetTargetHeapConcurrentStart, "(I)I"),
   NATIVE_METHOD(VMRuntime, newNonMovableArray, "(Ljava/lang/Class;I)Ljava/lang/Object;"),
   NATIVE_METHOD(VMRuntime, properties, "()[Ljava/lang/String;"),
   NATIVE_METHOD(VMRuntime, setTargetSdkVersion, "(I)V"),
